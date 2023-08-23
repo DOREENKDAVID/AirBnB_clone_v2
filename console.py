@@ -14,8 +14,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-import sqlalchemy
-
+from sqlalchemy import Column, Integer, String, Table
 
 
 class HBNBCommand(cmd.Cmd):
