@@ -1,5 +1,8 @@
-#!/usr/bin/python3
+#!/usr/in/python3
 """ City Module for HBNB project """
+import models
+import sqlalchemy
+from os import getenv
 from models.base_model import BaseModel, Base
 from models import storage_type
 from sqlalchemy import Column, String, ForeignKey
@@ -17,3 +20,7 @@ class City(BaseModel, Base):
     else:
         name = ''
         state_id = ''
+
+     def __init__(self, *args, **kwargs):
+        """initializes city"""
+        super().__init__(*args, **kwargs)
