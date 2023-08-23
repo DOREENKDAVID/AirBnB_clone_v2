@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import models
 import re
 import os
 from datetime import datetime
