@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 <<<<<<< HEAD
-
-
+import models
+import sqlalchemy
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Interger, ForeignKey, Float
+from sqlalchemy import Column, String, Interger, ForeignKey, Float, ForeignKey,Table
 from sqlalchemy.orm import relationship
 =======
 >>>>>>> 5521a241e9ba02e7e9ded45bec2079971360a925
