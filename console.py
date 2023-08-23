@@ -2,7 +2,6 @@
 """ Console Module """
 import cmd
 import sys
-import models
 import re
 import os
 from datetime import datetime
@@ -15,6 +14,8 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import sqlalchemy
+
 
 
 class HBNBCommand(cmd.Cmd):

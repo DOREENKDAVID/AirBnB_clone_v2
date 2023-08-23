@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 import models
 from os import getenv
 import sqlalchemy
-from models import storage_type
 from models.city import City
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -13,6 +12,8 @@ from sqlalchemy.orm import relationship
 class State(BaseModel, Base):
     """ State class / table model"""
     __tablename__ = 'states'
+
+    storage_type = getenv("HBNB_TYPE_STORAGE")
     if storage_type == 'db':
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state',
