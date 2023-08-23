@@ -6,7 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from os import getenv
+from sqlalchemy.ext.declarative import declarative_base
 
 
 place_amenity = Table('place_amenity', Base.metadata,
@@ -22,9 +22,11 @@ place_amenity = Table('place_amenity', Base.metadata,
 
 class Place(BaseModel, Base):
     """Representation of Place """
+    __tablename__ = 'places'
+
     storage_type = getenv("HBNB_TYPE_STORAGE")
     if storage_type == 'db':
-        __tablename__ = 'places'
+
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
