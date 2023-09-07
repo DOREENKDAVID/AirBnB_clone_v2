@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-""" Fabric script that distributes an archive to your web servers
+"""
+creates and distributes an archive to your web servers,
+using the function deploy
 """
 from fabric.operations import local, run, put
 from datetime import datetime
-from fabric.api import env
+from fabric.api import *
 import os
 import re
 
@@ -11,6 +13,8 @@ import re
 env.hosts = ['100.25.104.17', '35.174.205.159']
 env.user = "ubuntu"
 
+
+@runs_once
 def do_pack():
     """
     generates a .tgz archive from the contents of the web_static
@@ -76,3 +80,13 @@ def do_deploy(archive_path):
     print('New version deployed!')
 
     return True
+
+
+def deploy():
+    """
+    creates and distributes an archive to your web servers
+    """
+    tar = do_pack()
+    if tar is None:
+        return False
+    return do_deploy(tar)
