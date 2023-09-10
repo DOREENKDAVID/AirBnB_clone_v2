@@ -34,46 +34,37 @@ def do_pack():
 def do_deploy(archive_path):
     """ deploys web_static.tgz to the web servers
     """
-    if not os.path.exists(archive_path):
-        return False
+    try:
+        try:
+            if os.path.exists(archive_path):
+                arc_tgz = archive_path.split("/")
+                arg_save = arc_tgz[1]
+                arc_tgz = arc_tgz[1].split('.')
+                arc_tgz = arc_tgz[0]
 
-    result = put(archive_path, "/tmp")
-    if result.failed:
-        return False
+                """Upload archive to the server"""
+                put(archive_path, '/tmp')
 
-    rex = r'^versions/(\S+).tgz'
-    match = re.search(rex, archive_path)
-    filename = match.group(1)
-    result = put(archive_path, "/tmp/{}.tgz".format(filename))
-    if result.failed:
-        return False
-    result = run("mkdir -p /data/web_static/releases/{}/".format(filename))
-    if result.failed:
-        return False
-    result = run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/"
-                 .format(filename, filename))
-    if result.failed:
-        return False
-    result = run("rm /tmp/{}.tgz".format(filename))
-    if result.failed:
-        return False
-    result = run("mv /data/web_static/releases/{}"
-                 "/web_static/* /data/web_static/releases/{}/"
-                 .format(filename, filename))
-    if result.failed:
-        return False
-    result = run("rm -rf /data/web_static/releases/{}/web_static"
-                 .format(filename))
-    if result.failed:
-        return False
-    result = run("rm -rf /data/web_static/current")
-    if result.failed:
-        return False
-    result = run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
-                 .format(filename))
-    if result.failed:
-        return False
+                """Save folder paths in variables"""
+                uncomp_fold = '/data/web_static/releases/{}'.format(arc_tgz)
+                tmp_location = '/tmp/{}'.format(arg_save)
 
-    print('New version deployed!')
-
-    return True
+                """Run remote commands on the server"""
+                run('mkdir -p {}'.format(uncomp_fold))
+                run('tar -xvzf {} -C {}'.format(tmp_location, uncomp_fold))
+                run('rm {}'.format(tmp_location))
+                run('mv {}/web_static/* {}'.format(uncomp_fold, uncomp_fold))
+                run('rm -rf {}/web_static'.format(uncomp_fold))
+                run('rm -rf /data/web_static/current')
+                run('ln -sf {} /data/web_static/current'.format(uncomp_fold))
+                run('sudo service nginx restart')
+                return True
+            else:
+                print('File does not exist')
+                return False
+        except Exception as err:
+            print(err)
+            return False
+    except Exception:
+        print('Error')
+        return False
