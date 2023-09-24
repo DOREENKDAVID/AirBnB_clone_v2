@@ -32,12 +32,16 @@ def display_python(text='is cool'):
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def display_if_number(n):
-    return "%d is a number" % (n)
+    """ return numbers """
+    if type(n) == int:
+        return "%d is a number" % (n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def render_template(n):
-    return render_template('5-number.html', num=n)
+def template_int(n):
+    """ return html template with number """
+    if type(n) == int:
+        return render_template('5-number.html', num=n)
 
 
 if __name__ == '__main__':

@@ -32,17 +32,23 @@ def display_python(text='is cool'):
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def display_if_number(n):
-    return "%d is a number" % (n)
+    """ return numbers """
+    if type(n) == int:
+        return "%d is a number" % (n)
 
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
-def render_template_number(n):
-    return render_template('5-number.html', num=n)
+def template_number(n):
+    """ return html template with number """
+    if type(n) == int:
+        return render_template('5-number.html', num=n)
 
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def render_template_odd_or_even(n):
-    return render_template('6-number_odd_or_even.html', num=n)
+def template_odd_or_even(n):
+    """ return html template with number """
+    if type(n) == int:
+        return render_template('6-number_odd_or_even.html', num=n)
 
 
 if __name__ == '__main__':
