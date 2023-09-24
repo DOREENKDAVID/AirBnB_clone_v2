@@ -22,7 +22,6 @@ def states(id=None):
     else:
         states = storage.all('State').values()
 
-
     return render_template('9-states.html', states=states, id=id)
 
 
@@ -31,5 +30,6 @@ def teardown(self):
     """ close SQLAlchemy session """
     storage.close()
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000)

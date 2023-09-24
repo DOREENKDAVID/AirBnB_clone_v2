@@ -15,13 +15,14 @@ def hbnb_filters():
     cities = storage.all('City').values()
     amenities = storage.all('Amenity').values()
     return render_template('10-hbnb_filters.html', states=states,
-                            cities=cities, amenities=amenities)
+                           cities=cities, amenities=amenities)
 
 
 @app.teardown_appcontext
 def teardown(self):
     """ close SQLAlchemy session """
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
